@@ -6,8 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.current_weather_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 import pl.bemideas.pogoda.R
+import pl.bemideas.pogoda.data.network.ApixuWeatherApiService
+import pl.bemideas.pogoda.data.network.ConnectivityInterceptor
+import pl.bemideas.pogoda.data.network.ConnectivityInterceptorImpl
+import pl.bemideas.pogoda.data.network.WeatherNetworkDataSourceImpl
 
 class CurrentWeatherFragment : Fragment() {
 
@@ -28,6 +37,19 @@ class CurrentWeatherFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(CurrentWeatherViewModel::class.java)
         // TODO: Use the ViewModel
+
+        //test
+        val apiService = ApixuWeatherApiService(ConnectivityInterceptorImpl(this.context!!))
+        val weatherNetworkDataSource = WeatherNetworkDataSourceImpl(apiService)
+
+        weatherNetworkDataSource.downloadedCurrentWeather.observe(this, Observer {
+            textView.text = it.toString()
+        })
+
+        GlobalScope.launch(Dispatchers.Main) {
+            weatherNetworkDataSource.fetchCurrentWeather("Gdańsk", "pl")
+        }
+        //test
     }
 
 }
