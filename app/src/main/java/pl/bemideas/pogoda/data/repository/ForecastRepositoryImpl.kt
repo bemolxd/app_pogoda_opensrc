@@ -7,14 +7,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.threeten.bp.ZonedDateTime
 import pl.bemideas.pogoda.data.db.CurrentWeatherDao
+import pl.bemideas.pogoda.data.db.WeatherLocationDao
+import pl.bemideas.pogoda.data.db.entity.WeatherLocation
 import pl.bemideas.pogoda.data.db.unitlocalized.UnitSpecificCurrentWeatherEntry
 import pl.bemideas.pogoda.data.network.WeatherNetworkDataSource
 import pl.bemideas.pogoda.data.network.response.CurrentWeatherResponse
+import pl.bemideas.pogoda.data.provider.LocationProvider
 import java.util.*
 
 class ForecastRepositoryImpl(
     private val currentWeatherDao: CurrentWeatherDao,
-    private val weatherNetworkDataSource: WeatherNetworkDataSource
+    private val weatherLocationDao: WeatherLocationDao,
+    private val weatherNetworkDataSource: WeatherNetworkDataSource,
+    private val locationProvider: LocationProvider
 ) : ForecastRepository {
 
     init {
@@ -30,19 +35,33 @@ class ForecastRepositoryImpl(
         }
     }
 
+    override suspend fun getWeatherLocation(): LiveData<WeatherLocation> {
+        return withContext(Dispatchers.IO){
+            return@withContext weatherLocationDao.getLocation()
+        }
+    }
+
     private fun presistFetchedCurrentWeather(fetchedWeather: CurrentWeatherResponse){
         GlobalScope.launch(Dispatchers.IO) {
             currentWeatherDao.upsert(fetchedWeather.currentWeatherEntry)
+            weatherLocationDao.upsert(fetchedWeather.location)
         }
     }
 
     private suspend fun initWeatherData(){
-        if (isFetchCurrentNeeded(ZonedDateTime.now().minusHours(1))) fetchCurrentWeather()
+        val lastWeatherLocation = weatherLocationDao.getLocation().value
+
+        if (lastWeatherLocation == null || locationProvider.hasLocationChanged(lastWeatherLocation)) {
+            fetchCurrentWeather()
+            return
+        }
+
+        if (isFetchCurrentNeeded(lastWeatherLocation.zonedDateTime)) fetchCurrentWeather()
     }
 
     private suspend fun fetchCurrentWeather(){
         weatherNetworkDataSource.fetchCurrentWeather(
-            "Warszawa",
+            locationProvider.getPreferredLocationString(),
             Locale.getDefault().language
         )
     }
