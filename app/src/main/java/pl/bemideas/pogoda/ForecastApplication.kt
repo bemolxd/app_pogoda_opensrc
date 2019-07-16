@@ -11,6 +11,8 @@ import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 import pl.bemideas.pogoda.data.db.ForecastDatabase
 import pl.bemideas.pogoda.data.network.*
+import pl.bemideas.pogoda.data.provider.UnitProvider
+import pl.bemideas.pogoda.data.provider.UnitProviderImpl
 import pl.bemideas.pogoda.data.repository.ForecastRepository
 import pl.bemideas.pogoda.data.repository.ForecastRepositoryImpl
 import pl.bemideas.pogoda.ui.weather.current.CurrentWeatherViewModelFactory
@@ -26,7 +28,8 @@ class ForecastApplication : Application(), KodeinAware {
         bind() from singleton {ApixuWeatherApiService(instance())}
         bind<WeatherNetworkDataSource>() with singleton { WeatherNetworkDataSourceImpl(instance()) }
         bind<ForecastRepository>() with singleton { ForecastRepositoryImpl(instance(), instance()) }
-        bind() from provider { CurrentWeatherViewModelFactory(instance()) }
+        bind<UnitProvider>() with singleton { UnitProviderImpl(instance()) }
+        bind() from provider { CurrentWeatherViewModelFactory(instance(), instance()) }
     }
 
     override fun onCreate() {
