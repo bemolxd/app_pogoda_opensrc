@@ -7,8 +7,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import pl.bemideas.pogoda.data.db.entity.CURRENT_WEATHER_ID
 import pl.bemideas.pogoda.data.db.entity.CurrentWeatherEntry
-import pl.bemideas.pogoda.data.db.unitlocalized.ImperialCurrentWeatherEntry
-import pl.bemideas.pogoda.data.db.unitlocalized.MetricCurrentWeatherEntry
+import pl.bemideas.pogoda.data.db.unitlocalized.current.ImperialCurrentWeatherEntry
+import pl.bemideas.pogoda.data.db.unitlocalized.current.MetricCurrentWeatherEntry
 
 
 @Dao

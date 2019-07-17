@@ -5,19 +5,13 @@ import pl.bemideas.pogoda.data.provider.UnitProvider
 import pl.bemideas.pogoda.data.repository.ForecastRepository
 import pl.bemideas.pogoda.internal.UnitSystem
 import pl.bemideas.pogoda.internal.lazyDeffered
+import pl.bemideas.pogoda.ui.base.WeatherViewModel
 
 class CurrentWeatherViewModel(
     private val forecastRepository: ForecastRepository, unitProvider: UnitProvider
-) : ViewModel() {
+) : WeatherViewModel(forecastRepository, unitProvider) {
 
-    private val unitSystem = unitProvider.getUnitSystem()
 
-    val isMetric: Boolean
-        get() = unitSystem == UnitSystem.METRIC
+    val weather by lazyDeffered { forecastRepository.getCurrentWeather(super.isMetricUnit) }
 
-    val weather by lazyDeffered { forecastRepository.getCurrentWeather(isMetric) }
-
-    val weatherLocation by lazyDeffered {
-        forecastRepository.getWeatherLocation()
-    }
 }

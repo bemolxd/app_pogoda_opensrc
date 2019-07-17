@@ -1,4 +1,4 @@
-package pl.bemideas.pogoda.data.db.unitlocalized
+package pl.bemideas.pogoda.data.db.unitlocalized.current
 
 interface UnitSpecificCurrentWeatherEntry {
     val temperature: Double
