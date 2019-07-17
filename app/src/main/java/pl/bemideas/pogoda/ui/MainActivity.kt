@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        val manager = packageManager
+        val ver = manager.getPackageInfo(this.packageName, PackageManager.GET_ACTIVITIES)
+        val verName = ver.packageName
+
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
         bottom_nav.setupWithNavController(navController)
@@ -89,7 +93,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                 bindLocationManager()
             else
-                Toast.makeText(this, "Please, set location manually in settings", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.please_set_location), Toast.LENGTH_LONG).show()
         }
     }
 }

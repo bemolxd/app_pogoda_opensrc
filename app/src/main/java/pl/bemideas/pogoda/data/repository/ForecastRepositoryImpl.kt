@@ -68,8 +68,8 @@ class ForecastRepositoryImpl(
             return@withContext if (metric) futureWeatherDao.getDetailedWeatherByDateMetric(date)
             else futureWeatherDao.getDetailedWeatherByDateImperial(date)
         }
-    }
-    */
+    } */
+
 
     override suspend fun getWeatherLocation(): LiveData<WeatherLocation> {
         return withContext(Dispatchers.IO) {

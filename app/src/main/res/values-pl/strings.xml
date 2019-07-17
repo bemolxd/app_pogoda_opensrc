@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pogoda</string>
+    <string name="feels_like_temp">Odczuwalna</string>
+    <string name="menu_7_days">7 Dni</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_today">Dzisiaj</string>
+    <string name="nextweek_forecast_subtitle">Następny tydzień</string>
+    <string name="percipitation">Opady</string>
+    <string name="please_set_location">Proszę ustawić lokalizację manualnie w ustawieniach</string>
+    <string name="preference_allow_app_location">Pozwól aplikacji uzyskać Twoje położenie</string>
+    <string name="preference_info_development">Aplikacja wciąż w fazie rozwoju. Mogą wystąpić bugi!</string>
+    <string name="preference_location">Lokalizacja</string>
+    <string name="preference_location_summary">Lokalizacja, dla której będzie wyświetlana pogoda</string>
+    <string name="preference_unit_system">System Jednostek</string>
+    <string name="preference_use_device_location">Użyj lokalizacji urządzenia</string>
+    <string name="settings_page_title">Ustawienia</string>
+    <string name="today_weather_subtitle">Dzisiaj</string>
+    <string name="visibility">Widoczność</string>
+    <string name="wind">Wiatr</string>
+    <string name="preference_weather_location">Lokalizacja pogody</string>
+</resources>

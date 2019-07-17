@@ -79,7 +79,7 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun chooseLocalizedUnitAbbreviation(metric: String, imperial: String): String{
-        return if (viewModel.isMetric) metric else imperial
+        return if (viewModel.isMetricUnit) metric else imperial
     }
 
     private fun updateLocation(location: String){
@@ -87,13 +87,13 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
     }
 
     private fun updateDateToToday(){
-        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = "Today"
+        (activity as? AppCompatActivity)?.supportActionBar?.subtitle = getString(R.string.today_weather_subtitle)
     }
 
     private fun updateTemperatures(temperature: Double, feelsLike: Double){
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("°C", "°F")
         textView_temperature.text = "$temperature$unitAbbreviation"
-        textView_feels_like_temperature.text = "Feels like $feelsLike$unitAbbreviation"
+        textView_feels_like_temperature.text = getString(R.string.feels_like_temp) + " " + "$feelsLike$unitAbbreviation"
     }
 
     private fun updateCondition(condition: String){
@@ -102,16 +102,16 @@ class CurrentWeatherFragment : ScopedFragment(), KodeinAware {
 
     private fun updatePercipitation(percipitationValue: Double){
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("mm", "in")
-        textView_precipitation.text = "Percipitation: $percipitationValue $unitAbbreviation"
+        textView_precipitation.text = getString(R.string.percipitation) + ": $percipitationValue $unitAbbreviation"
     }
 
     private fun updateWind(windDirection: String, windSpeed: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("kph", "mph")
-        textView_wind.text = "Wind: $windDirection, $windSpeed $unitAbbreviation"
+        textView_wind.text = getString(R.string.wind) + ": $windDirection, $windSpeed $unitAbbreviation"
     }
 
     private fun updateVisibility(visibilityDistance: Double) {
         val unitAbbreviation = chooseLocalizedUnitAbbreviation("km", "mi.")
-        textView_visibility.text = "Visibility: $visibilityDistance $unitAbbreviation"
+        textView_visibility.text = getString(R.string.visibility) + ": $visibilityDistance $unitAbbreviation"
     }
 }

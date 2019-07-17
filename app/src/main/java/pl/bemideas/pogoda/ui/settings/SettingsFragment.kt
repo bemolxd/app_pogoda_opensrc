@@ -1,5 +1,6 @@
 package pl.bemideas.pogoda.ui.settings
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
@@ -14,7 +15,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        (activity as? AppCompatActivity)?.supportActionBar?.title = "Settings"
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.settings_page_title)
         (activity as? AppCompatActivity)?.supportActionBar?.subtitle = null
     }
 }

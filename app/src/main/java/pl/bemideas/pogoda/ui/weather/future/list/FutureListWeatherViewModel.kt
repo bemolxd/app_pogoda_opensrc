@@ -8,7 +8,7 @@ import pl.bemideas.pogoda.ui.base.WeatherViewModel
 
 class FutureListWeatherViewModel(
     private val forecastRepository: ForecastRepository,
-    private val unitProvider: UnitProvider
+    unitProvider: UnitProvider
 ) : WeatherViewModel(forecastRepository, unitProvider) {
 
     val weatherEntries by lazyDeffered {

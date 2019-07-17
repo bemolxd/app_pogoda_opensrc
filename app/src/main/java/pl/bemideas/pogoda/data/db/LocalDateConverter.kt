@@ -11,5 +11,7 @@ object LocalDateConverter {
         LocalDate.parse(it, DateTimeFormatter.ISO_LOCAL_DATE)
     }
 
+    @TypeConverter
+    @JvmStatic
     fun dateToString(dateTime: LocalDate?) = dateTime?.format(DateTimeFormatter.ISO_LOCAL_DATE)
 }
